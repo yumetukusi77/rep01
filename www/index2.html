@@ -1,0 +1,67 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta http-equiv="Content-Security-Policy" content="default-src * data:; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'">
+    <link rel="stylesheet" href="components/loader.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="components/loader.js"></script>
+    <script src="js/ncmb-2.1.0.min.js"></script>
+    <script>
+        $(function() {
+            // mBaaSの初期化
+            var application_key = "24a18df9043df75d63752a6a27fdebf37381be0f1601a85feb87cb802e4e6c1c";
+            var client_key = "9d46cdccb5adfb97aaf77a5050b2be4a603795eb012048f9d3ccf2e8a29c9915";
+            var ncmb = new NCMB(application_key, client_key);
+            
+            var user = ncmb.User.getCurrentUser();
+            
+
+            // メールアドレスによる会員登録
+            $("form").on("submit", function() {
+               var username = $("#username").val();
+                ncmb.User.requestSignUpEmail(username)
+                 .then(function(data){
+                // 送信後処理
+                    alert("requestSignUpEmail");
+                })
+                 .catch(function(err){
+                // エラー処理
+                    alert("requestSignUpEmail err");
+                 });
+                    
+                
+                return false; 
+            });
+        });
+    </script>
+    <style>
+        body {
+            background-color: #BBDEFB;
+            padding-top: 20px;
+            font-family: verdana, sans-serif;
+        }
+        form {
+            padding: 30px auto;
+            text-align: center;
+        }
+        input {
+            border-radius: 5px;
+            padding: 7px;
+            margin-bottom: 10px;
+            width: 200px;
+            font-size: 20px;
+        }
+    </style>
+    
+</head>
+<body>
+    <h1>新規登録</h1>
+    <form>
+        <input type="text" id="username" placeholder="メールアドレスを入力" />
+        <input type="submit" value="送信" />
+    </form>
+
+</body>
+</html>
